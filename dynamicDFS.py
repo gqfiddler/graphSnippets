@@ -46,14 +46,17 @@ def dynamicDFS(graph, start, end):
     validPaths = []
     position = SmartPos(start)
     nodesToCheck = graph.getChildrenOf(start)
+    if end in nodesToCheck:
+        validPaths.append([start, end])
+        nodesToCheck.remove(end)
 
     while nodesToCheck != []:
-        position.moveTo(nodesToCheck[-1])
-        if position.getCurrentNode() == end:
-            validPaths.append(position.getPath())
-            nodesToCheck = nodesToCheck[:-1]
+        if nodesToCheck[-1] not in graph.getChildrenOf(position.getCurrentNode()) \
+        or position.beenThere(nodesToCheck[-1]):
             position.moveBack()
         else:
+            position.moveTo(nodesToCheck[-1]) # this will never be end node (see below)
+            del nodesToCheck[-1]
             uncheckedChildren = []
             for childNode in graph.getChildrenOf(position.getCurrentNode()):
                 # if child node is the end, just add the path if we don't already
@@ -78,10 +81,14 @@ def dynamicDFS(graph, start, end):
                                 validPaths.append(newPath)
                         # if it doesn't lead to the end, it's a dead end and we
                         # can safely ignore it - no action needed
-
             if uncheckedChildren == []:
                 position.moveBack()
-                nodesToCheck = nodesToCheck[:-1]
             else:
                 nodesToCheck.extend(uncheckedChildren)
     return validPaths
+
+# DRIVER: should return [['0', '2', '6', '14', '30'], ['0', '1', '2', '6', '14', '30']]
+# from treeBuilders import simpleIterative
+# digraph = simpleIterative(100)
+# digraph.connect("1","2")
+# print(dynamicDFS(digraph, "0","30"))

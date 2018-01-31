@@ -3,18 +3,19 @@ simpleIterative: iterative function that constructs a digraph with any given
     number of nodes
 
 simpleRecursive: recursive function that constructs a digraph with any given
-number of nodes
+    number of nodes
 '''
 import string
 import math
-from graph import Node, Digraph
+from graph import Digraph
 import timeit
 
 def simpleIterative(nodeCount):
     nodes = []
     graph = Digraph()
+    # Digraph object stores a list of nodes and a dictionary of node:childrenList
     for i in range(nodeCount):
-        nodes.append(Node(str(i)))
+        nodes.append(str(i))
         graph.addNode(nodes[i])
     levelCount = int(math.log(nodeCount, 2)) + 1
     extraNodes = nodeCount - 2**(levelCount - 1)
@@ -43,7 +44,7 @@ def simpleRecursive(nodeCount):
     nodes = []
     graph = Digraph()
     for i in range(nodeCount):
-        nodes.append(Node(str(i)))
+        nodes.append(str(i))
         graph.addNode(nodes[i])
 
     def recurBuild (graph, nodes, parentNodes=[]):
@@ -76,6 +77,6 @@ def simpleRecursive(nodeCount):
 
     return recurBuild(graph, nodes)
 
-# TIMETEST - iterative is ~20% faster
-# print(timeit.timeit('simpleIterative(1000)', 'from __main__ import simpleIterative', number=100))
-# print(timeit.timeit('simpleRecursive(1000)', 'from __main__ import simpleRecursive', number=100))
+# TIMETEST - iterative is ~35% faster
+# print(timeit.timeit('simpleIterative(1000)', 'from __main__ import simpleIterative', number=1000))
+# print(timeit.timeit('simpleRecursive(1000)', 'from __main__ import simpleRecursive', number=1000))
