@@ -4,8 +4,9 @@ CONTENTS OF THE .PY FILES IN THIS FOLDER:
 a very simple directed graph class called Digraph
 
 ** dynamicDFS.py **
-a dynamic iterative depth-first search algorithm for a directed graph.
-(This is much more complicated than the standard recursive algorithm,
+a dynamic iterative depth-first search algorithm for a directed graph
+that returns all possible paths from one node to another.
+    (This is much more complicated than the standard recursive algorithm,
 but I wanted to see how it could be done - plus, it may be useful for
 cases where recursion is undesirable.)
 
